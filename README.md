@@ -3,4 +3,5 @@
 
 效果：
 
-![](./screen.jpg)
+<!-- 设置图片宽度为300像素 -->
+<img src="./screen.jpg" alt="描述" width="300">
