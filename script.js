@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cells[sequence[currentIndex]].classList.add('hidden');
             currentIndex = (currentIndex + 1) % sequence.length;
             cells[sequence[currentIndex]].classList.remove('hidden');
-        }, 40); // 转动间隔时间
+        }, 100); // 转动间隔时间
     }
 
     // 停止转动逻辑
