@@ -60,8 +60,8 @@ html {
 }
 
 .popup-box.active {
-  width: 50%;
-  height: 200px;
+  width: 74%;
+  height: 120px;
   background: radial-gradient(circle at center, #f9a825, #d46a0c);
   /* 从中心到边缘的径向渐变 */
   border-radius: 60px;
@@ -78,7 +78,7 @@ html {
   opacity: 1;
   transition: all 0.6s ease-in-out;
   /* 定义过渡效果 */
-  font-size: 3.5rem;
+  font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
