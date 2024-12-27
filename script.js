@@ -1,3 +1,27 @@
+
+// 中奖金额根据概率随机生成
+function getRandomAmount() {
+    const amounts = [5, 10, 20, 50, 100];
+    const probabilities = [0.1, 0.1, 0.1, 0.25, 0.45];
+    const random = Math.random();
+    let cumulativeProbability = 0;
+  
+    for (let i = 0; i < probabilities.length; i++) {
+      cumulativeProbability += probabilities[i];
+      if (random < cumulativeProbability) {
+        return amounts[i];
+      }
+    }
+  
+    return amounts[amounts.length - 1]; // 默认返回最后一个面值
+}
+
+window.onload = function() {
+    // 保证一屏展示完
+    const rect = document.getElementById('game-board').getBoundingClientRect();
+    document.querySelector('.zcm').style.height = `${window.innerHeight - rect.height}px`; 
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const gameBoard = document.getElementById('game-board');
     const cells = [];
@@ -12,7 +36,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const cell = document.createElement('div');
         cell.classList.add('cell', 'hidden');
         cell.dataset.index = i;
-        cell.innerHTML = i;
+        const img = document.createElement('img');
+        img.src = "./bg.png";
+        img.classList.add("bg-img");
+        cell.appendChild(img);
+        const mask = document.createElement('div');
+        mask.classList.add('mask');
+        mask.dataset.index = i;
+        cell.appendChild(mask);
         gameBoard.appendChild(cell);
         cells.push(cell);
     }
@@ -30,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 显示起始格子
         cells[sequence[currentIndex]].classList.remove('hidden');
+        document.querySelector('.popup-box').classList.remove('active');
 
         interval = setInterval(() => {
             // 隐藏当前格子并显示下一个格子
@@ -45,8 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
         spinning = false;
 
         // 显示最终结果（当前显示的格子）
-        const winningIndex = cells.findIndex(cell => !cell.classList.contains('hidden'));
-        alert(`你抽到了第 ${winningIndex + 1} 格！`);
+        // const winningIndex = cells.findIndex(cell => !cell.classList.contains('hidden'));
+        setTimeout(() => {
+            const dom = document.querySelector('.popup-box');
+            dom.innerHTML = `恭喜，抽中${getRandomAmount()}元`
+            dom.classList.toggle('active');
+        }, 1000);
+        // alert(`你抽到了第 ${winningIndex + 1} 格！`);
     }
 
     // 重置游戏状态
@@ -56,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
         currentIndex = 0;
     }
    // 监听点击和触摸事件，允许在页面任意位置触发
-    document.addEventListener('keydown', handleInteraction, { passive: false });
-    document.addEventListener('touchend', handleInteraction, { passive: false });
+    document.querySelector('#game-board').addEventListener('keydown', handleInteraction, { passive: false });
+    document.querySelector('#game-board').addEventListener('touchend', handleInteraction, { passive: false });
 
     function handleInteraction(event) {
         console.log(event);
