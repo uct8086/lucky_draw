@@ -34,7 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalCells = gridSize * gridSize;
     for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement('div');
-        cell.classList.add('cell', 'hidden');
+        cell.classList.add('cell');
+        if (!spinning && i === 12) {
+            cell.classList.add('glowing');
+        } else {
+            cell.classList.add('hidden');
+        }
         cell.dataset.index = i;
         const img = document.createElement('img');
         img.src = "./bg.png";
@@ -57,10 +62,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 开始转动逻辑
     function startSpinning() {
+        const dom = document.querySelector('.popup-box');
+        if (Array.from(dom.classList).includes('active')) {
+            dom.classList.remove('active');
+            cells[sequence[currentIndex]].classList.remove('hidden');
+            cells[sequence[currentIndex]].classList.add('glowing');
+            return;
+        }
         spinning = true;
 
         // 显示起始格子
         cells[sequence[currentIndex]].classList.remove('hidden');
+        cells[sequence[currentIndex]].classList.remove('glowing');
         document.querySelector('.popup-box').classList.remove('active');
 
         interval = setInterval(() => {
@@ -89,7 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // 重置游戏状态
     function resetGame() {
         // 重置所有格子为隐藏状态
-        cells.forEach(cell => cell.classList.add('hidden'));
+        cells.forEach((cell, i) => {
+            if (i === 12) {
+                cell.classList.add('glowing')
+            } else {
+                cell.classList.add('hidden')
+            }
+    });
         currentIndex = 0;
     }
    // 监听点击和触摸事件，允许在页面任意位置触发

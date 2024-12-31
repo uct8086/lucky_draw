@@ -96,6 +96,33 @@ html {
   transform: translate(-50%, -50%);
 }
 
+.glowing {
+  z-index: 1;
+  background-color: grey;
+  overflow: visible; /* 确保伪元素不会被裁剪 */
+}
+
+.glowing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  animation: shine 1s infinite alternate;
+  z-index: -1; /* 确保伪元素在Div内容之下 */
+}
+
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 0 #FFD700, 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+  }
+  100% {
+    box-shadow: 0 0 30px #FFD700, 0 0 40px #FFD700, 0 0 70px #FFD700, 0 0 100px #FFD700;
+  }
+}
+
 @keyframes pop-and-flip {
   0% {
     transform: scale(0) rotateY(0deg);
