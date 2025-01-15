@@ -2,7 +2,7 @@
 // 中奖金额根据概率随机生成
 function getRandomAmount() {
     const amounts = [5, 10, 20, 50, 100];
-    const probabilities = [0.1, 0.1, 0.1, 0.25, 0.45];
+    const probabilities = [0.1, 0.15, 0.2, 0.25, 0.30];
     const random = Math.random();
     let cumulativeProbability = 0;
   
